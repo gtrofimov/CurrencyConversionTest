@@ -30,10 +30,9 @@ pipeline {
             steps {
                 script {
                     env.allServices.tokenize(",").each { url -> 
-                        echo "${url}"
-                        sh  '''
-                            echo "${url}"
-                            '''
+                        sh  """
+                            echo ${url}
+                            """
                 
 
                     }
