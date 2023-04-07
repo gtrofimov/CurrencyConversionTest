@@ -12,6 +12,7 @@ pipeline {
     }
     stages {
         stage('Build') {
+        when { equals expected: true, actual: false }
             steps {
                 cleanWs()
                 checkout scm
