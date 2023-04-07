@@ -8,7 +8,7 @@ pipeline {
         skipDefaultCheckout(true)
     }
     environment {
-        allServices=["http://exchange:8051", "http://conversion:8052"]
+        allServices="http://exchange:8051, http://conversion:8052"
     }
     stages {
         stage('Build') {
@@ -26,12 +26,14 @@ pipeline {
             }
             steps('Report') {
                 script {
-                    for (String url : allServices) {
+                    env.allServices.tokenize(",").each { url -> 
+                                
                         sh  '''
-                            echo ${url}
+                            echo $url
                             '''
-                    }
-                }
+                
+
+                    }}
             }
         }
     }
