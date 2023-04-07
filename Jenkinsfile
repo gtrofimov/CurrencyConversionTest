@@ -35,6 +35,7 @@ pipeline {
                 sh  '''
                     for file in $PWD/*.zip; do
                         echo ${file}
+                    done
                     '''
                 
                 
