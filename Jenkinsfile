@@ -32,7 +32,10 @@ pipeline {
                 //    unzip 
                 //    jtest gnerate report
                 // }
-                // 
+                sh  '''
+                    for file in $PWD/*.zip
+                        echo ${file}
+                    '''
                 
                 
             }
