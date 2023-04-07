@@ -8,7 +8,7 @@ pipeline {
         skipDefaultCheckout(true)
     }
     environment {
-        allServices="http://exchange:8051, http://conversion:8052"
+        cov_agent_ports="8051,8052"
     }
     stages {
         stage('Build') {
@@ -28,15 +28,13 @@ pipeline {
         }
         stage('Report'){
             steps {
-                script {
-                    env.allServices.tokenize(",").each { url -> 
-                        sh  """
-                            echo ${url}
-                            """
+                // for each .zip {
+                //    unzip 
+                //    jtest gnerate report
+                // }
+                // 
                 
-
-                    }
-                }
+                
             }
 
         }
