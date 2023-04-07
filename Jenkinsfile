@@ -24,7 +24,9 @@ pipeline {
                     '''
         
             }
-            steps('Report') {
+        }
+        stage('Report'){
+            steps {
                 script {
                     env.allServices.tokenize(",").each { url -> 
                                 
@@ -36,6 +38,7 @@ pipeline {
                     }
                 }
             }
+
         }
     }
 }
