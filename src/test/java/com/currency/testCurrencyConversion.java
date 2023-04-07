@@ -1,6 +1,7 @@
 package com.currency;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -18,6 +19,7 @@ public class testCurrencyConversion {
 	// cov agent info
 	CoverageAgentController obj = new CoverageAgentController();
 	String COV_PORT[] = { "8051", "8052" };
+	public HashMap<String, String> sessions = new HashMap<String, String>();
 
 	// start tests
 	@BeforeMethod
@@ -29,8 +31,11 @@ public class testCurrencyConversion {
 		// call startTest method
 		for (String port : COV_PORT) {
 			String url = APP_HOST + ":" + port;
-			obj.startTest(url, test, testCase);
-			obj.getStatus(url);
+			obj.startTestCase(url, test, testCase);
+			String sessionId = obj.getStatus(url).getBody().jsonPath().get("session");
+			sessions.put(port, sessionId);
+			System.out.println(sessions);
+	
 		}
 	}
 
@@ -55,6 +60,8 @@ public class testCurrencyConversion {
 			String url = APP_HOST + ":" + port;
 			obj.stopSession(url);
 			obj.getStatus(url);
+			String sessionId = sessions.get(port);
+			obj.getCoverage(url, port, sessionId);
 		}
 	}
 	@Test
