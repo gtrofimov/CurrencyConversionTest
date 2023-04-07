@@ -31,7 +31,7 @@ pipeline {
                     env.allServices.tokenize(",").each { url -> 
                                 
                         sh  '''
-                            echo $url
+                            echo ${url}
                             '''
                 
 
