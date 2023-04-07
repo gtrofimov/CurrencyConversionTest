@@ -12,7 +12,7 @@ pipeline {
     }
     stages {
         stage('Build') {
-        when { equals expected: true, actual: false }
+        when { equals expected: true, actual: true }
             steps {
                 cleanWs()
                 checkout scm
@@ -33,7 +33,7 @@ pipeline {
                 //    jtest gnerate report
                 // }
                 sh  '''
-                    for file in $PWD/*.zip
+                    for file in $PWD/*.zip; do
                         echo ${file}
                     '''
                 
