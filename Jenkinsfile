@@ -29,7 +29,7 @@ pipeline {
         stage('Report'){
             steps {
                 script {
-                    env.allServices.tokenize(",").each { url -> 
+                    env.allServices.tokenize(",").each() { url -> 
                         echo ${url}
                         sh  '''
                             echo ${url}
