@@ -38,6 +38,7 @@ pipeline {
                 copyArtifacts(projectName: 'currency-conversion-service-jtest');
                 
                 sh  '''
+                    
                     # Jtest Step
                     # Set Up and write .properties file
                     echo $"
