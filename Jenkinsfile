@@ -69,7 +69,7 @@ pipeline {
                         $(docker build -q ./jtest) \
                         jtestcli \
                         -settings /home/parasoft/jtestcli.properties \
-                        -staticcoverage "monitor/${file}" \
+                        -staticcoverage "${file}" \
                         -runtimecoverage "${port}/runtime_coverage" \
                         -config "jtest/CalculateApplicationCoverage.properties" \
                         -property report.coverage.images="${app_name}-ComponentTests" \
