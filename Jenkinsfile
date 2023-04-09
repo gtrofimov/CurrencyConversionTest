@@ -39,13 +39,13 @@ pipeline {
 
                 sh  '''
                     for file in $PWD/*.zip; do
-                        unzip ${file}
+                        unzip ${file} ${file:16:4}
                     done
                     '''
                 sh  '''
-                    # for file1 in runtime cov
-                        #port = last 4 charcaters of filename
-                        #for file2 in static_cov
+                    # for dir in $PWD/runtime_cov*; do
+                        #port = ${dir:16:4}
+                        #for file2 in ${PWD}
                         #run jtest command
                     '''
                 
