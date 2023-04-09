@@ -39,9 +39,7 @@ pipeline {
 
                 sh  '''
                     for file in $PWD/*.zip; do
-                        filename=$(basename "$file")
-                        newfile="${filename%.*}"
-                        unzip ${file} ${newfile:16:4}
+                        unzip ${file} -d ${file: -8:-4}
                     done
                     '''
                 sh  '''
