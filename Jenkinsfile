@@ -36,17 +36,44 @@ pipeline {
                 
                 copyArtifacts(projectName: 'currency-exchange-service-jtest');
                 copyArtifacts(projectName: 'currency-conversion-service-jtest');
-
+                
+                sh  '''
+                    # Jtest Step
+                    # Set Up and write .properties file
+                    echo $"
+                    parasoft.eula.accepted=true
+                    jtest.license.use_network=true
+                    jtest.license.network.edition=server_edition
+                    license.network.use.specified.server=true
+                    license.network.auth.enabled=true
+                    license.network.url=${ls_url}
+                    license.network.user=${ls_user}
+                    license.network.password=${ls_pass}" >> jtest/jtestcli.properties
+                    '''
+                
                 sh  '''
                     for file in $PWD/*.zip; do
                         unzip ${file} -d ${file: -8:-4}
                     done
                     '''
                 sh  '''
-                    # for dir in $PWD/runtime_cov*; do
-                        #port = ${dir:16:4}
-                        #for file2 in ${PWD}
-                        #run jtest command
+                    for file in $PWD/monitor/*.xml; do
+                        port=${file: -8:-4}
+                        
+                        # run Jtest to generate report
+                        docker run --rm -i \
+                        -u 0:0 \
+                        -v "$PWD:$PWD" \
+                        -w "$PWD" \
+                        $(docker build -q ./jtest) \
+                        jtestcli \
+                        -settings /home/parasoft/jtestcli.properties \
+                        -staticcoverage "monitor/${file}" \
+                        -runtimecoverage "${port}/runtime_coverage" \
+                        -config "jtest/CalculateApplicationCoverage.properties" \
+                        -property report.coverage.images="${app_name}-ComponentTests" \
+                        -property session.tag="ComponentTests"
+                    done
                     '''
                 
                 
