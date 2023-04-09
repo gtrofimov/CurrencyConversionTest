@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Base64;
 
 import org.json.simple.JSONObject;
 
@@ -90,7 +91,7 @@ public class CoverageAgentController {
 				.header("Content-Type", "application/json")
 				.header("Accept", "application/octet-stream")
 				.baseUri(url)
-				.basePath("/session/{id}")
+				.basePath("/coverage/{id}")
 				.pathParam("id", sessionId)
 				.get().asByteArray();
 		
