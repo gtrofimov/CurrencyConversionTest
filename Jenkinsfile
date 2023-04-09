@@ -16,6 +16,7 @@ pipeline {
             steps {
                 cleanWs()
                 checkout scm
+                
                 echo "Running Tests: ${env.JOB_NAME}"
 
                 // start session 
@@ -32,10 +33,20 @@ pipeline {
                 //    unzip 
                 //    jtest gnerate report
                 // }
+                
+                copyArtifacts(projectName: 'currency-exchange-service-jtest');
+                copyArtifacts(projectName: 'currency-conversion-service-jtest');
+
                 sh  '''
                     for file in $PWD/*.zip; do
-                        echo ${file}
+                        unzip ${file}
                     done
+                    '''
+                sh  '''
+                    # for file1 in runtime cov
+                        #port = last 4 charcaters of filename
+                        #for file2 in static_cov
+                        #run jtest command
                     '''
                 
                 
