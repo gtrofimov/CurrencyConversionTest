@@ -8,7 +8,11 @@ pipeline {
         skipDefaultCheckout(true)
     }
     environment {
-        cov_agent_ports="8051,8052"
+        
+        // Parasoft Licenses
+        ls_url="${PARASOFT_LS_URL}"
+        ls_user="${PARASOFT_LS_USER}"
+        ls_pass="${PARASOFT_LS_PASS}"
     }
     stages {
         stage('Build') {
