@@ -78,6 +78,7 @@ pipeline {
                         -config "jtest/CalculateApplicationCoverage.properties" \
                         -property report.coverage.images="${app_name}-ComponentTests" \
                         -property session.tag="ComponentTests"
+                        -report ${port}
                     done
                     '''
                 
