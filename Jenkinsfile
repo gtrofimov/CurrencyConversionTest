@@ -8,7 +8,6 @@ pipeline {
         skipDefaultCheckout(true)
     }
     environment {
-        
         // Parasoft Licenses
         ls_url="${PARASOFT_LS_URL}"
         ls_user="${PARASOFT_LS_USER}"
@@ -33,14 +32,18 @@ pipeline {
         }
         stage('Report'){
             steps {
-                // for each .zip {
-                //    unzip 
-                //    jtest gnerate report
-                // }
-                
+                // copy static cov xmls
                 copyArtifacts(projectName: 'currency-exchange-service-jtest');
                 copyArtifacts(projectName: 'currency-conversion-service-jtest');
                 
+                // unzip coverages
+                sh  '''
+                    for file in $PWD/*.zip; do
+                        unzip ${file} -d ${file: -8:-4}
+                    done
+                    '''
+                
+                // license jtest
                 sh  '''
                     
                     # Jtest Step
@@ -55,14 +58,12 @@ pipeline {
                     license.network.user=${ls_user}
                     license.network.password=${ls_pass}" >> jtest/jtestcli.properties
                     '''
-                
+
+                // run jtest on all coverages
                 sh  '''
-                    for file in $PWD/*.zip; do
-                        unzip ${file} -d ${file: -8:-4}
-                    done
-                    '''
-                sh  '''
+                    # for every static_cov.xml
                     for file in $PWD/monitor/*.xml; do
+                        # get the port from the last four charcters of static_cov.xml
                         cov_port=${file: -8:-4}
                         
                         # run Jtest to generate report
@@ -76,13 +77,11 @@ pipeline {
                         -staticcoverage "${file}" \
                         -runtimecoverage "${cov_port}/runtime_coverage" \
                         -config "jtest/CalculateApplicationCoverage.properties" \
-                        -property report.coverage.images="${cov_port}-ComponentTests" \
-                        -property session.tag="ComponentTests" \
+                        -property report.coverage.images="${cov_port}-E2ETests" \
+                        -property session.tag="E2ETests" \
                         -report ${cov_port}
                     done
-                    '''
-                
-                
+                    '''               
             }
 
         }
