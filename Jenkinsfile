@@ -63,7 +63,7 @@ pipeline {
                     '''
                 sh  '''
                     for file in $PWD/monitor/*.xml; do
-                        port=${file: -8:-4}
+                        agent=${file: -8:-4}
                         
                         # run Jtest to generate report
                         docker run --rm -i \
@@ -74,11 +74,11 @@ pipeline {
                         jtestcli \
                         -settings /home/parasoft/jtestcli.properties \
                         -staticcoverage "${file}" \
-                        -runtimecoverage "${port}/runtime_coverage" \
+                        -runtimecoverage "${agent}/runtime_coverage" \
                         -config "jtest/CalculateApplicationCoverage.properties" \
                         -property report.coverage.images="${app_name}-ComponentTests" \
                         -property session.tag="ComponentTests"
-                        -report ${port}
+                        -report ${agent}
                     done
                     '''
                 
