@@ -33,8 +33,7 @@ pipeline {
         stage('Report'){
             steps {
                 // copy static cov xmls
-                copyArtifacts(projectName: 'currency-exchange-service-jtest');
-                copyArtifacts(projectName: 'currency-conversion-service-jtest');
+                copyArtifacts('currency-exchange-service-jtest','currency-conversion-service-jtest');
                 
                 // unzip coverages
                 sh  '''
