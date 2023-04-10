@@ -77,7 +77,7 @@ pipeline {
                         -runtimecoverage "${cov_port}/runtime_coverage" \
                         -config "jtest/CalculateApplicationCoverage.properties" \
                         -property report.coverage.images="${cov_port}-ComponentTests" \
-                        -property session.tag="ComponentTests"
+                        -property session.tag="ComponentTests" \
                         -report ${cov_port}
                     done
                     '''
