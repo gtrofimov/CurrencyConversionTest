@@ -44,8 +44,7 @@ pipeline {
                     '''
                 
                 // license jtest
-                sh  '''
-                    
+                sh  '''                    
                     # Jtest Step
                     # Set Up and write .properties file
                     echo $"
@@ -58,7 +57,7 @@ pipeline {
                     license.network.user=${ls_user}
                     license.network.password=${ls_pass}" >> jtest/jtestcli.properties
                     '''
-
+                    
                 // run jtest on all coverages
                 sh  '''
                     # for every static_cov.xml
