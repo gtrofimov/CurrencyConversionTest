@@ -30,7 +30,6 @@ pipeline {
                     parasoft.eula.accepted=true
                     jtest.license.use_network=true
                     jtest.license.network.edition=server_edition
-                    jtest.forceTestReportsImport=true
                     license.network.use.specified.server=true
                     license.network.auth.enabled=true
                     license.network.url=${ls_url}
@@ -51,10 +50,12 @@ pipeline {
                     $(docker build -q ./jtest) /bin/bash -c " \
                     mvn \
                     -Dmaven.test.failure.ignore=true \
-                    clean test jtest:jtest \
+                    clean test-compile jtest:agent test jtest:jtest \
                     -s /home/parasoft/.m2/settings.xml \
                     -Djtest.settings='/home/parasoft/jtestcli.properties' \
-                    -Djtest.config='builtin://Unit Tests'"
+                    -Djtest.config='builtin://Unit Tests'" \
+                    -Djtest.forceTestReportsImport=true \
+                    -Djtest.coverage.skip
                     '''
         
             }
