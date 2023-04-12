@@ -47,7 +47,7 @@ pipeline {
                     -u 0:0 \
                     -v "$PWD:$PWD" \
                     -w "$PWD" \
-                    $(docker build -q ./jenkins/jtest) /bin/bash -c " \
+                    $(docker build -q ./jtest) /bin/bash -c " \
                     mvn \
                     -Dmaven.test.failure.ignore=true \
                     test jtest:jtest \
