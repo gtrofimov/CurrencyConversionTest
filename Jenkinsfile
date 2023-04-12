@@ -25,7 +25,20 @@ pipeline {
                 // start session 
                 sh  '''
                     # Run tests
-                    mvn clean test
+                    # mvn clean test
+                    
+                    # Run tests with Jtest
+                    docker run --rm -i \
+                    -u 0:0 \
+                    -v "$PWD:$PWD" \
+                    -w "$PWD" \
+                    $(docker build -q ./jenkins/jtest) /bin/bash -c " \
+                    mvn \
+                    -Dmaven.test.failure.ignore=true \
+                    test jtest:jtest \
+                    -s /home/parasoft/.m2/settings.xml \
+                    -Djtest.settings='/home/parasoft/jtestcli.properties' \
+                    -Djtest.config="builtin://Unit Tests"
                     '''
         
             }
