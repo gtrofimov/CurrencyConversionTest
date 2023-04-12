@@ -21,6 +21,21 @@ pipeline {
                 checkout scm
                 
                 echo "Running Tests: ${env.JOB_NAME}"
+                                
+                // license jtest
+                sh  '''                    
+                    # Jtest Step
+                    # Set Up and write .properties file
+                    echo $"
+                    parasoft.eula.accepted=true
+                    jtest.license.use_network=true
+                    jtest.license.network.edition=server_edition
+                    license.network.use.specified.server=true
+                    license.network.auth.enabled=true
+                    license.network.url=${ls_url}
+                    license.network.user=${ls_user}
+                    license.network.password=${ls_pass}" >> jtest/jtestcli.properties
+                    '''
 
                 // start session 
                 sh  '''
@@ -38,7 +53,7 @@ pipeline {
                     test jtest:jtest \
                     -s /home/parasoft/.m2/settings.xml \
                     -Djtest.settings='/home/parasoft/jtestcli.properties' \
-                    -Djtest.config="builtin://Unit Tests"
+                    -Djtest.config='builtin://Unit Tests'"
                     '''
         
             }
@@ -55,22 +70,7 @@ pipeline {
                         unzip ${file} -d ${file: -8:-4}
                     done
                     '''
-                
-                // license jtest
-                sh  '''                    
-                    # Jtest Step
-                    # Set Up and write .properties file
-                    echo $"
-                    parasoft.eula.accepted=true
-                    jtest.license.use_network=true
-                    jtest.license.network.edition=server_edition
-                    license.network.use.specified.server=true
-                    license.network.auth.enabled=true
-                    license.network.url=${ls_url}
-                    license.network.user=${ls_user}
-                    license.network.password=${ls_pass}" >> jtest/jtestcli.properties
-                    '''
-                    
+   
                 // run jtest on all coverages
                 sh  '''
                     # for every static_cov.xml
