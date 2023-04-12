@@ -30,6 +30,7 @@ pipeline {
                     parasoft.eula.accepted=true
                     jtest.license.use_network=true
                     jtest.license.network.edition=server_edition
+                    jtest.unittest.xml.results.processing.enabled=true
                     license.network.use.specified.server=true
                     license.network.auth.enabled=true
                     license.network.url=${ls_url}
