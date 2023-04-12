@@ -45,12 +45,26 @@
   </properties>
   <build>
   <plugins>
-
+      <plugin>
+        <groupId>com.parasoft.jtest</groupId>
+        <artifactId>jtest-maven-plugin</artifactId>
+        <version>2020.1.0</version>
+        <configuration>
+          <!-- jtest:agent goal will set Jtest Java agent VmArg into properties below -->
+          <agentPropertyNames>jtest.argLine</agentPropertyNames>
+          <!-- optional coverage block with parameters identical as in offline coverage -->
+          <coverage>
+            <!-- ... -->
+          </coverage>
+        </configuration>
+      </plugin>
     <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.0.0</version>
         <configuration>
+        	<forkCount>1</forkCount>
+            <argLine>${jtest.argLine}</argLine>
           <suiteXmlFiles>
             <suiteXmlFile>testng.xml</suiteXmlFile>
           </suiteXmlFiles>
