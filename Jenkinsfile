@@ -44,15 +44,15 @@ pipeline {
                     
                     # Run tests with Jtest
                     docker run --rm -i \
-                    -u 0:0 \
+                    -u 995:991 \
                     -v "$PWD:$PWD" \
                     -w "$PWD" \
                     $(docker build -q ./jtest) /bin/bash -c " \
                     mvn \
                     -Dmaven.test.failure.ignore=true \
                     test jtest:jtest \
-                    -s /home/parasoft/.m2/settings.xml \
-                    -Djtest.settings='/home/parasoft/jtestcli.properties' \
+                    -s jtest/.m2/settings.xml \
+                    -Djtest.settings='jtest/jtestcli.properties' \
                     -Djtest.config='builtin://Unit Tests'" \
                     -Djtest.forceTestReportsImport=true \
                     -Djtest.coverage.skip
@@ -82,13 +82,12 @@ pipeline {
                         
                         # run Jtest to generate report
                         docker run --rm -i \
-                        -u 0:0 \
+                        -u 995:991 \
                         -v "$PWD:$PWD" \
-                        -v "$PWD/jtest/jtestcli.properties:/home/parasoft/jtestcli.properties" \
                         -w "$PWD" \
                         parasoft/jtest \
                         jtestcli \
-                        -settings /home/parasoft/jtestcli.properties \
+                        -settings jtest/jtestcli.properties \
                         -staticcoverage "${file}" \
                         -runtimecoverage "${cov_port}/runtime_coverage" \
                         -config "jtest/CalculateApplicationCoverage.properties" \
