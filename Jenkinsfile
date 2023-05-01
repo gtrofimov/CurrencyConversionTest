@@ -34,7 +34,8 @@ pipeline {
                     license.network.auth.enabled=true
                     license.network.url=${ls_url}
                     license.network.user=${ls_user}
-                    license.network.password=${ls_pass}" >> jtest/jtestcli.properties
+                    license.network.password=${ls_pass}
+                    jtest.unittest.xml.results.processing.enabled=true" >> jtest/jtestcli.properties
                     '''
 
                 // start session 
