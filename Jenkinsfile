@@ -50,6 +50,7 @@ pipeline {
                     $(docker build -q ./jtest) /bin/bash -c " \
                     mvn \
                     -Dmaven.test.failure.ignore=true \
+                    test-compile jtest:agent \
                     test jtest:jtest \
                     -s jtest/.m2/settings.xml \
                     -Djtest.settings='jtest/jtestcli.properties' \
