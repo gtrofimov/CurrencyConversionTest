@@ -54,8 +54,7 @@ pipeline {
                     -s jtest/.m2/settings.xml \
                     -Djtest.settings='jtest/jtestcli.properties' \
                     -Djtest.config='builtin://Unit Tests'" \
-                    -Djtest.forceTestReportsImport=true \
-                    -Djtest.coverage.skip
+                    -Djtest.forceTestReportsImport=true
                     '''
         
             }
