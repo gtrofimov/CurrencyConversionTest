@@ -48,7 +48,7 @@
       <plugin>
         <groupId>com.parasoft.jtest</groupId>
         <artifactId>jtest-maven-plugin</artifactId>
-        <version>2022.2.1</version>
+        <version>2023.1.0</version>
         <configuration>
           <!-- jtest:agent goal will set Jtest Java agent VmArg into properties below -->
           <agentPropertyNames>jtest.argLine</agentPropertyNames>
